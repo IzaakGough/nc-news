@@ -95,3 +95,15 @@
   justify-content: space-between;
 }
 
+.comments {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  
+}
+
+li {
+  display: flex;
+  list-style-type: none;
+  border: 2px solid blue;
+}

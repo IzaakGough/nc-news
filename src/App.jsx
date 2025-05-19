@@ -12,6 +12,7 @@ function App() {
   
   const [articles, setArticles] = useState([])
   const [article, setArticle] = useState(null)
+  const [comments, setComments] = useState([])
 
   return (
     <>
@@ -23,6 +24,8 @@ function App() {
           setArticles={setArticles}
           article={article}
           setArticle={setArticle} 
+          comments={comments}
+          setComments={setComments}
           />
           }/>
       </Routes>

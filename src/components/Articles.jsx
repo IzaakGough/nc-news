@@ -4,7 +4,14 @@ import axios from "axios"
 import { apiBaseString } from "../App"
 
 
-function Articles({articles, setArticles, article, setArticle}) {
+function Articles({
+    articles,
+    setArticles,
+    article,
+    setArticle,
+    comments,
+    setComments
+}) {
 
     useEffect(() => {
         axios.get(`${apiBaseString}/articles`)
@@ -22,6 +29,12 @@ function Articles({articles, setArticles, article, setArticle}) {
         .then(response => {
             console.log(response.data.article)
             setArticle(response.data.article)
+
+            axios.get(`${apiBaseString}/articles/${article_id}/comments`)
+            .then(response => {
+                console.log(response.data.comments)
+                setComments(response.data.comments)
+            })
         })
         .catch(err => console.log(err))
     }
@@ -60,6 +73,19 @@ function Articles({articles, setArticles, article, setArticle}) {
                 </div>
                 </div>
                 <button className="back-button" onClick={handleBack}>Back</button>
+                </div>
+
+                <div>
+                    <h2>Comments: {article.comment_count}</h2>
+                    <ul className="comments">
+                        {comments.map(comment => {
+                            return <li>
+                                <h3>{comment.author}</h3>
+                                <h3>{comment.body}</h3>
+                                <h3>{comment.votes}</h3>
+                            </li>
+                        })}
+                    </ul>
                 </div>
                 </>
             ) : (
