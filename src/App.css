@@ -70,3 +70,28 @@
   align-items: flex-start;
   align-content: flex-start
 }
+
+.read-article {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-content: center;
+  border: 2px solid blue;
+}
+
+.article-title {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content:center;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.article-info {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+

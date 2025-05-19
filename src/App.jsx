@@ -11,6 +11,7 @@ export const apiBaseString = "https://northcoders-backend-project-z5pl.onrender.
 function App() {
   
   const [articles, setArticles] = useState([])
+  const [article, setArticle] = useState(null)
 
   return (
     <>
@@ -19,7 +20,9 @@ function App() {
         <Route path="/articles" element={
           <Articles
           articles={articles}
-          setArticles={setArticles} 
+          setArticles={setArticles}
+          article={article}
+          setArticle={setArticle} 
           />
           }/>
       </Routes>
