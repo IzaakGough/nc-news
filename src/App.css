@@ -40,3 +40,33 @@
 .read-the-docs {
   color: #888;
 }
+
+.article {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+  border: 2px solid blue
+}
+
+.navbar {
+  display: flex;
+}
+
+#header {
+
+}
+
+.numbers {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center; 
+}
+
+.read-button {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start
+}
