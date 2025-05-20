@@ -27,7 +27,9 @@ function Article() {
         article={article}
         setArticle={setArticle}
         />
-        <Comments />
+        <Comments
+        article={article}
+        />
         </>
     )
 
