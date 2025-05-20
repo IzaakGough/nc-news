@@ -2,8 +2,10 @@ import { useParams } from "react-router-dom"
 import axios from "axios"
 import { apiBaseString } from "../App"
 import { useState, useEffect } from "react"
+import PostComment from "./PostComment"
+import CommentCard from "./CommentCard"
 
-function Comments() {
+function Comments({article}) {
     const [comments, setComments] = useState([])
     const {article_id} = useParams()
 
@@ -14,18 +16,20 @@ function Comments() {
         })
         .catch(err => console.log(err))
 
-    }, [])
+    }, [comments])
 
     return (
         <>
-        <h3>Comments: {comments.length}</h3>
+        <h3>Comments: {article.comment_count}</h3>
+        <PostComment
+        comments={comments}
+        setComments={setComments}
+        />
         <ul>
             {comments.map(comment => {
-                return <li>
-                    <h3>{comment.author}</h3>
-                    <h3>{comment.votes}</h3>
-                    <h3>{comment.body}</h3>
-                </li>
+                return <CommentCard
+                comment={comment} 
+                />
             })}
         </ul>
         </>
