@@ -26,10 +26,6 @@ function PostComment({comments, setComments}) {
                 //console.log(response.data.postedComment)
                 setComment("")
                 setLoading(false)
-                setComments(comments => {
-                    comments.push(response.data.postedComment)
-                    return comments
-                })
             })
             .catch(err => {
                 console.log(err)
