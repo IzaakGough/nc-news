@@ -4,6 +4,7 @@ import { apiBaseString } from "../App"
 import { useState, useEffect } from "react"
 import PostComment from "./PostComment"
 import CommentCard from "./CommentCard"
+import DeleteComment from "./DeleteComment"
 
 function Comments({article}) {
     const [comments, setComments] = useState([])
@@ -27,9 +28,15 @@ function Comments({article}) {
         />
         <ul>
             {comments.map(comment => {
-                return <CommentCard
+                return <> 
+                <CommentCard
                 comment={comment} 
                 />
+                <DeleteComment
+                comment={comment}
+                />
+                </> 
+                
             })}
         </ul>
         </>
