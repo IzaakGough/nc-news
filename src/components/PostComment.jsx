@@ -1,12 +1,10 @@
 import { useParams } from "react-router-dom"
-import axios from "axios"
-import { apiBaseString } from "../App"
-import { useState, useEffect } from "react"
+import { useState} from "react"
+import { postArticleComment } from "../utils/api"
 
-function PostComment({comments, setComments}) {
+function PostComment() {
     const [comment, setComment] = useState("")
     const {article_id} = useParams()
-
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     
@@ -17,13 +15,11 @@ function PostComment({comments, setComments}) {
     function handleSubmit(event) {
         event.preventDefault()
         setLoading(true)
+
             // Comments hardcoded to be posted as user grumpy19 for now
-            axios.post(`${apiBaseString}/articles/${article_id}/comments`, {
-                username: "grumpy19",
-                body: comment
-            })
-            .then(response => {
-                //console.log(response.data.postedComment)
+
+            postArticleComment(article_id, "grumpy19", comment)
+            .then(() => {
                 setComment("")
                 setLoading(false)
             })
@@ -32,6 +28,7 @@ function PostComment({comments, setComments}) {
                 setError(true)
             })
     }
+
         return (
             <>
             <form onSubmit={handleSubmit}>
@@ -51,7 +48,6 @@ function PostComment({comments, setComments}) {
             </form>
             </>
         )
-
 }
 
 export default PostComment
