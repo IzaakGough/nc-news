@@ -18,7 +18,11 @@ function App() {
             <Article/>
           }/>
           <Route path="/articles/:topic" element={
-            <Article />
+            <Articles />
+          }
+          />
+          <Route path="/articles/:sort_by/:order" element={
+            <Articles />
           }
           />
       </Routes>
