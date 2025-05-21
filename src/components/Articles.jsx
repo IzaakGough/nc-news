@@ -1,21 +1,41 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
-import { apiBaseString } from "../App"
 import ArticleCard from "./ArticleCard"
+import { useSearchParams } from "react-router-dom"
+import Topics from "./Topics"
+import { getArticles, getArticlesByTopic} from "../utils/api"
 
 function Articles() {
     const [articles, setArticles] = useState([])
+    const [searchParams] = useSearchParams()
+    const topic = searchParams.get("topic")
 
     useEffect(() => {
-        axios.get(`${apiBaseString}/articles`)
-        .then(response => {
-            setArticles(response.data.articles)
-        })
-        .catch(err => console.log(err))
-    }, [])
 
+        if (topic) {
+
+            getArticlesByTopic(topic)
+            .then(articles => {
+                setArticles(articles)
+            })
+            .catch(err => console.log(err))
+
+        } else {
+
+            getArticles()
+            .then(articles => {
+                setArticles(articles)
+            })
+            .catch(err => console.log(err))
+
+        }
+    }, [topic])
+    
+    
     return (
         <>
+        <Topics
+        setArticles={setArticles}
+        />
         <ul>
         {articles.map(article => {
         return <ArticleCard

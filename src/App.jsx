@@ -5,10 +5,8 @@ import Header from './Header'
 import Articles from './components/Articles'
 import Article from './components/Article'
 
-export const apiBaseString = "https://northcoders-backend-project-z5pl.onrender.com/api"
-
 function App() {
-  
+
   return (
     <>
     <Header />
@@ -19,6 +17,10 @@ function App() {
           <Route path="/articles/:article_id" element={
             <Article/>
           }/>
+          <Route path="/articles/:topic" element={
+            <Article />
+          }
+          />
       </Routes>
     </>
   )

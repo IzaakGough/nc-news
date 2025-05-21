@@ -1,19 +1,19 @@
 import { useParams } from "react-router-dom"
-import axios from "axios"
-import { apiBaseString } from "../App"
 import { useState, useEffect } from "react"
 import PostComment from "./PostComment"
 import CommentCard from "./CommentCard"
 import DeleteComment from "./DeleteComment"
+import { getArticleComments } from "../utils/api"
 
 function Comments({article}) {
     const [comments, setComments] = useState([])
     const {article_id} = useParams()
 
     useEffect(() => {
-        axios.get(`${apiBaseString}/articles/${article_id}/comments`)
-        .then(response => {
-            setComments(response.data.comments)
+
+        getArticleComments(article_id)
+        .then(comments => {
+            setComments(comments)
         })
         .catch(err => console.log(err))
 
