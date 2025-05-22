@@ -3,17 +3,21 @@ import { useState, useEffect } from "react"
 import PostComment from "./PostComment"
 import CommentCard from "./CommentCard"
 import DeleteComment from "./DeleteComment"
-import { getArticleComments } from "../utils/api"
+import { getArticleCommentsByQuery } from "../utils/api"
+import Pagination from "./Pagination"
+import { useSearchParams } from "react-router-dom"
 
 function Comments({setArticle}) {
     const [comments, setComments] = useState([])
+    const [searchParams] = useSearchParams()
+    const query = searchParams.toString()
     const {article_id} = useParams()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
 
     useEffect(() => {
         setLoading(true)
-        getArticleComments(article_id)
+        getArticleCommentsByQuery(article_id, query)
         .then(comments => {
             setLoading(false)
             setComments(comments)
@@ -22,7 +26,7 @@ function Comments({setArticle}) {
             setError(true)
         })
 
-    }, [])
+    }, [query])
 
     if (error) return <p>Something went wrong...</p>
     
@@ -32,6 +36,7 @@ function Comments({setArticle}) {
                 <p>Loading comments...</p>
             ) : (
             <>
+            <Pagination />
             <PostComment
             setArticle={setArticle}
             setComments={setComments}  

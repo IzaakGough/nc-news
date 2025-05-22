@@ -29,6 +29,11 @@ export const getArticleComments = (article_id) => {
     .then(res => res.data.comments)
 }
 
+export const getArticleCommentsByQuery = (article_id, query) => {
+    return northCodersNewsApi.get(`/articles/${article_id}/comments?${query}`)
+    .then(res => res.data.comments)
+}
+
 
 export const postArticleComment = (article_id, username, comment) => {
     return northCodersNewsApi.post(`/articles/${article_id}/comments`, {
