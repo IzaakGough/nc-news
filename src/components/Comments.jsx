@@ -5,42 +5,55 @@ import CommentCard from "./CommentCard"
 import DeleteComment from "./DeleteComment"
 import { getArticleComments } from "../utils/api"
 
-function Comments({article}) {
+function Comments({setArticle}) {
     const [comments, setComments] = useState([])
     const {article_id} = useParams()
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(false)
 
     useEffect(() => {
-
+        setLoading(true)
         getArticleComments(article_id)
         .then(comments => {
+            setLoading(false)
             setComments(comments)
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            setError(true)
+        })
 
-    }, [comments])
+    }, [])
 
-    return (
-        <>
-        <h3>Comments: {article.comment_count}</h3>
-        <PostComment
-        comments={comments}
-        setComments={setComments}
-        />
-        <ul>
-            {comments.map(comment => {
-                return <> 
-                <CommentCard
-                comment={comment} 
-                />
-                <DeleteComment
-                comment={comment}
-                />
-                </> 
-                
-            })}
-        </ul>
-        </>
-    )
+    if (error) return <p>Something went wrong...</p>
+    
+        return (
+            <>
+            {loading? (
+                <p>Loading comments...</p>
+            ) : (
+            <>
+            <PostComment
+            setArticle={setArticle}
+            setComments={setComments}  
+            />
+            <ul>
+                {comments.map(comment => {
+                    return <> 
+                    <CommentCard
+                    comment={comment} />
+                    <DeleteComment
+                    setArticle={setArticle}
+                    setComments={setComments}
+                    comment={comment} />
+                    </> 
+                    
+                })}
+            </ul>
+            </>
+            )}
+            </>
+            
+        )
 }
 
 export default Comments

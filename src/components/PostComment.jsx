@@ -1,37 +1,57 @@
 import { useParams } from "react-router-dom"
 import { useState} from "react"
-import { postArticleComment } from "../utils/api"
+import { getArticleById, getArticleComments, postArticleComment } from "../utils/api"
+import { useContext } from "react"
+import { LoginContext } from "../contexts/LoggedInUser"
 
-function PostComment() {
+
+
+function PostComment({setComments, setArticle}) {
+
+    const {loggedInUser, setLoggedInUser} = useContext(LoginContext)
+
     const [comment, setComment] = useState("")
     const {article_id} = useParams()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     
-    function handleChange(event) {
-        setComment(event.target.value)
+    function handleChange(e) {
+        setComment(e.target.value)
     }
 
-    function handleSubmit(event) {
-        event.preventDefault()
+    function handleSubmit(e) {
+        e.preventDefault()
+
         setLoading(true)
 
-            // Comments hardcoded to be posted as user grumpy19 for now
-
-            postArticleComment(article_id, "grumpy19", comment)
+            postArticleComment(article_id, loggedInUser.username, comment)
             .then(() => {
-                setComment("")
-                setLoading(false)
+                getArticleComments(article_id)
+                .then(comments => {
+                    setComments(comments)
+                    setComment("")
+                    setLoading(false)
+                    getArticleById(article_id)
+                    .then(article => {
+                        setArticle(article)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             })
             .catch(err => {
-                console.log(err)
                 setError(true)
             })
     }
 
         return (
             <>
-            <form onSubmit={handleSubmit}>
+            {loggedInUser ? (
+                <form onSubmit={handleSubmit}>
                 <label htmlFor="body">
                     <textarea 
                     value={comment}
@@ -46,6 +66,12 @@ function PostComment() {
                 value={loading? "Posting...": "Comment"}
                 disabled={loading} />
             </form>
+
+            ) : 
+            (
+                <p>Please login to post a comment...</p>
+            )
+        }
             </>
         )
 }

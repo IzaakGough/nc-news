@@ -1,8 +1,14 @@
 import { useState } from "react"
-import { deleteArticleComment } from "../utils/api"
+import { deleteArticleComment, getArticleById, getArticleComments } from "../utils/api"
+import { useParams } from "react-router-dom"
+import { useContext } from "react"
+import { LoginContext } from "../contexts/LoggedInUser"
 
-function DeleteComment({comment}) {
-    
+function DeleteComment({comment, setComments, setArticle}) {
+
+    const {loggedInUser, setLoggedInUser} = useContext(LoginContext)
+
+    const {article_id} = useParams()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
 
@@ -10,10 +16,22 @@ function DeleteComment({comment}) {
         setLoading(true)
         
         deleteArticleComment(comment.comment_id)
-        .then(() => setLoading(false))
+        .then(() => {
+            setLoading(false)
+            getArticleComments(article_id)
+            .then(comments => {
+                setComments(comments)
+                getArticleById(article_id)
+                .then(article => {
+                    setArticle(article)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            })
+        })
         .catch(err => {
             setError(true)
-            console.log(err)
         })
 
     }
@@ -21,10 +39,9 @@ function DeleteComment({comment}) {
     if (loading) return <p>Deleting...</p>
     if (error) return <p>Something went wrong...</p>
 
-    // Hard coded so that only comments posted by grumpy19 are able to be deleted
     return (
         <>
-        {comment.author === "grumpy19" && (
+        {loggedInUser && comment.author === loggedInUser.username && (
             <button 
             onClick={handleDelete}
             disabled={loading}

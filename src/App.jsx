@@ -4,6 +4,9 @@ import './App.css'
 import Header from './Header'
 import Articles from './components/Articles'
 import Article from './components/Article'
+import LoginForm from './LoginForm'
+import Users from './components/Users'
+
 
 function App() {
 
@@ -11,6 +14,7 @@ function App() {
     <>
     <Header />
       <Routes>
+        <Route path="/" />
         <Route path="/articles" element={
           <Articles/>
           }/>
@@ -25,6 +29,11 @@ function App() {
             <Articles />
           }
           />
+        <Route path="/users" element={
+          <Users />
+        }
+        />
+        <Route path="/login" element={<LoginForm />} />
       </Routes>
     </>
   )

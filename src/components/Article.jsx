@@ -6,20 +6,26 @@ import { getArticleById } from "../utils/api"
 
 function Article() {
 
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(false)
     const [article, setArticle] = useState(null)
     const {article_id} = useParams()
 
         useEffect(() => {
-
+            setLoading(true)
             getArticleById(article_id)
             .then(article => {
                 setArticle(article)
+                setLoading(false)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setError(true)
+            })
 
-        }, [article_id])
+        },[])
 
     if (!article) return <p>Loading...</p>
+    if (error) return <p>Something went wrong</p>
 
     return (
         <>
@@ -27,9 +33,7 @@ function Article() {
         article={article}
         setArticle={setArticle}
         />
-        <Comments
-        article={article}
-        />
+        <Comments setArticle={setArticle} />
         </>
     )
 

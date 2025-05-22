@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
-import { useNavigate, createSearchParams, useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 
 function Sort() {
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [selectedSort, setSelectedSort] = useState(searchParams.get("sort") || "created_at")
     const [selectedOrder, setSelectedOrder] = useState(searchParams.get("order") || "desc")
-
 
     useEffect(() => {
         if (selectedSort && selectedOrder) {
