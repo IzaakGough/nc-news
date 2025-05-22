@@ -7,7 +7,7 @@ function ArticleDetail({article, setArticle}) {
         article={article}
         setArticle={setArticle}
         />
-
+        <h3>Comments: {article.comment_count}</h3>
         <div className="read-article">
         <div>{article.body}</div>
         <div className="article-title">

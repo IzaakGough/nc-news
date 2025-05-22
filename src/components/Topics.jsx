@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, createSearchParams, useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 import { getTopics } from "../utils/api"
 
 function Topics() {
@@ -17,9 +17,9 @@ function Topics() {
 
     }, [])
 
-    function handleChange(event) {
+    function handleChange(e) {
         const newParams = new URLSearchParams(searchParams)
-        newParams.set("topic", event.target.value)
+        newParams.set("topic", e.target.value)
         setSearchParams(newParams)
     }
 
