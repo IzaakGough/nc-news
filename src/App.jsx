@@ -6,6 +6,7 @@ import Articles from './components/Articles'
 import Article from './components/Article'
 import LoginForm from './LoginForm'
 import Users from './components/Users'
+import Home from './components/Home'
 
 
 function App() {
@@ -14,7 +15,9 @@ function App() {
     <>
     <Header />
       <Routes>
-        <Route path="/" />
+        <Route path="/" element={
+          <Home />
+        }/>
         <Route path="/articles" element={
           <Articles/>
           }/>

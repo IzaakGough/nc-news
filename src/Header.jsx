@@ -8,6 +8,11 @@ function Header() {
     return (
         <header className="header">
             <nav className="navbar">
+
+                <Link to="/">
+                Home
+                </Link>
+
                 <Link to="/articles">
                 Articles
                 </Link>
