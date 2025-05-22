@@ -6,7 +6,7 @@ function Header() {
     const {loggedInUser} = useContext(LoginContext)
 
     return (
-        <header>
+        <header className="header">
             <nav className="navbar">
                 <Link to="/articles">
                 Articles
@@ -17,9 +17,11 @@ function Header() {
                 </Link>
                 
             </nav>
+
             <Link id="login" to="/login">
-            {loggedInUser ? <h3>Logged in as {loggedInUser.username}</h3> : <h3>Log in</h3>}
-            </Link>
+                {loggedInUser ? <h3>Logged in as {loggedInUser.username}</h3> : <h3>Log in</h3>}
+                </Link>
+
         </header>
     )
 }

@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom"
 import Topics from "./Topics"
 import { getArticlesByQuery } from "../utils/api"
 import Sort from "./Sort"
+import Pagination from "./Pagination"
 
 function Articles() {
     const [articles, setArticles] = useState([])
@@ -30,7 +31,8 @@ function Articles() {
     return (
         <>
         <Topics/>
-        <Sort/> 
+        <Sort/>
+        <Pagination />
         <ul>
         {articles.map(article => {
         return <ArticleCard article={article}/> 
